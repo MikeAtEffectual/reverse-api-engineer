@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-07-27
+
+### Added
+- **`client_executed` json-stream event**: a non-interactive `--json`/`--json-stream` run is a single SDK turn end-to-end, so `result` only fires once the whole turn is over — a caller watching the stream had no earlier way to know a working, live-verified client already existed, even when the agent spent a long tail of that turn on unrelated busywork. `--json-stream` now emits `{"event": "client_executed", "script_path": "..."}` as soon as the agent successfully runs the generated client with its own language-specific run command, giving wrapper scripts a signal they can bound cost and time against. Emitted for both `engineer` and `agent`; Claude SDK only (OpenCode/Copilot/Cursor have separate streaming handlers). See the [scripted usage docs](https://reverseapi.dev/docs/cli/scripted-usage).
+
+### Changed
+- **Slimmer source distribution**: the sdist no longer ships the repo's binary banner/demo assets, the `examples/` and `design/` trees, or `uv.lock` — none of which are needed to build, install, or test the package (README images are served from GitHub, not the tarball). The published `.tar.gz` drops from ~1.0 MB to ~0.2 MB. The wheel is unchanged.
+
 ## [0.12.0] - 2026-07-22
 
 ### Changed
